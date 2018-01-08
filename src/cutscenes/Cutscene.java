@@ -7,7 +7,7 @@ public abstract class Cutscene{
 	protected boolean hasEnded;
 	
 	public Cutscene() {
-		
+		  
 	}
 
 	public abstract void tick();
