@@ -7,7 +7,8 @@ import ui.GameWindow;
  * Starting point of the Game.
  * 
  * @author Rajarshi Basu
- * This is purple.
+ * This is orange
+ .
  */
 public class Main {
 	/**
