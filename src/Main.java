@@ -1,4 +1,4 @@
-
+ 
 import framework.GameLoop;
 import framework.Screen;
 import ui.GameWindow;
@@ -6,7 +6,7 @@ import ui.GameWindow;
 /**
  * Starting point of the Game.
  * 
- * @author Rajarshi
+ * @author Rajarshi Basu
  *
  */
 public class Main {
