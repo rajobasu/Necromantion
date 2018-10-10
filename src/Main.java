@@ -7,7 +7,7 @@ import ui.GameWindow;
  * Starting point of the Game.
  * 
  * @author Rajarshi Basu
- * hi
+ * dfshi
  */
 public class Main {
 	/**
