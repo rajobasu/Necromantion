@@ -7,12 +7,6 @@ import ui.GameWindow;
  * Starting point of the Game.
  * 
  * @author Rajarshi Basu
-<<<<<<< HEAD
- * This is orange
-=======
- * This is it i.
- .
->>>>>>> branch 'master' of https://github.com/rajobasu/Necromantion.git
  */
 public class Main {
 	/**
