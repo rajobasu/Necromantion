@@ -8,7 +8,6 @@ import ui.GameWindow;
  * 
  * @author Rajarshi Basu
  * This is orange
- .
  */
 public class Main {
 	/**
