@@ -28,7 +28,7 @@ public abstract class Trap extends Tile implements Walkable {
 	public Trap(int x, int y, int imageCode) {
 		super(x, y, Images.FLOOR);
 		activated = true;
-		detected = true;
+		detected = false;
 	}
 
 	/**
