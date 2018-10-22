@@ -4,11 +4,11 @@ import framework.Screen;
 import ui.GameWindow;
 
 /**
- * Starting point of the Game. Blue
+ * Starting point of the Game. 
  * 
  * 
  * @author Rajarshi Basu
- * k
+ * 
  */
 public class Main {
 	/**
