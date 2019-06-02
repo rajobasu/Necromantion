@@ -14,6 +14,8 @@ import framework.engines.GameEngine;
 import objects.Collectable;
 import objects.ResourceUpdator;
 import objects.misc.BackPack;
+import objects.playerResource.armours.BaseArmour;
+import objects.playerResource.weapons.BaseWeapon;
 
 public class ItemSelector implements ButtonListener, ButtonMaker {
 
@@ -65,18 +67,20 @@ public class ItemSelector implements ButtonListener, ButtonMaker {
 		int percentSize60_x = (b * ud * 60 - 30) / 100;
 		// int percentSize30_y = (l * ud * 30) / 100;
 
-		if (bp.getWeapon() == null) {
+		if (bp.getWeapon() instanceof BaseWeapon) {
 			weapon = new CustomButton();
 		} else {
 			weapon = new CustomButton(offsetx, offsety, percentSize10_x, percentSize10_y, c, bp.getWeapon().getImage(),
 					bp.getWeapon());
 		}
-		if (bp.getShield() == null) {
+		if (bp.getShield() instanceof BaseArmour) {
 			shield = new CustomButton();
 		} else {
 			shield = new CustomButton(offsetx + percentSize10_x + spaceX, offsety, percentSize10_x, percentSize10_y, c,
 					bp.getShield().getImage(), bp.getShield());
 		}
+		weapon.addButtonListener(this);
+		shield.addButtonListener(this);
 
 		for (Collectable cc : bp.getItems()) {
 			CustomButton button = null;

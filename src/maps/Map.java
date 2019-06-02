@@ -122,7 +122,7 @@ public class Map {
 					sprdbl.spread(this);
 			}
 		}
-		// after spreading only shoud they be allowed to cause damage further.
+		// after spreading only should they be allowed to cause damage further.
 		for (GameObject obj : getObjects()) {
 			obj.tick(this);
 		}

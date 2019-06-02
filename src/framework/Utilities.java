@@ -161,7 +161,7 @@ public class Utilities {
 		XoRoRNG xrng = new XoRoRNG();
 		int damage = xrng.nextInt(Math.max(0, attackStrength - defenseStrength));
 
-		damage += xrng.nextInt(defenseStrength);
+		damage += xrng.nextInt(attackStrength);
 		damage += xp;
 
 		return damage;

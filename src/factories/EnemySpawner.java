@@ -18,7 +18,7 @@ public class EnemySpawner {
 
 	private final int MAX_ENEMY_COUNT = 5;
 	private final XoRoRNG rng = new XoRoRNG();
-	private final int SPAWN_PROBABILITY = 20;// out of 100
+	private final int SPAWN_PROBABILITY = 5;// out of 100
 
 	private Player player;
 
@@ -39,7 +39,7 @@ public class EnemySpawner {
 		LinkedList<Enemy> enemies = map.getEnemies();
 
 		if (enemies.size() > MAX_ENEMY_COUNT + MapManager.getCurrentLevel()) return;
-		if (rng.nextInt(100) < SPAWN_PROBABILITY) {
+		if (rng.nextInt(100) < SPAWN_PROBABILITY*map.getID()) {
 			while (true) {
 				int x = rng.nextInt(map.getBreadth());
 				int y = rng.nextInt(map.getLength());
@@ -52,7 +52,7 @@ public class EnemySpawner {
 						}
 					}
 					if (canPut) {
-						map.addEnemy(RandomEnemyGenerator.getRandomEnemy(x, y));
+						map.addEnemy(RandomEnemyGenerator.getRandomEnemy(x, y , map.getID()));
 						return;
 					}
 				}

@@ -1,4 +1,4 @@
-package objects.misc;
+ package objects.misc;
 
 import java.awt.Graphics2D;
 import java.util.LinkedList;
@@ -70,6 +70,7 @@ public class Fire extends GameObject implements Spreadable, TurnBased {
 		}
 
 		if (!hasFuel) {
+			System.out.println("THE FIRE OBJECT HAS BEEN REMOVED");
 			map.removeObject(this);
 		} else {
 			turnsLeft++;
@@ -92,7 +93,7 @@ public class Fire extends GameObject implements Spreadable, TurnBased {
 
 	@Override
 	public void spread(Map map) {
-
+		System.out.println("THE FIRE OBJECT HAS BEEN GIVEN A CHANCE TO SPREAD");
 		LinkedList<GameObject> objects = map.getObjects();
 		for (GameObject ob : map.getTiles()) {
 			if (ob instanceof Burnable) {
@@ -130,7 +131,7 @@ public class Fire extends GameObject implements Spreadable, TurnBased {
 
 		GameObject ob = Player.getINSTANCE();
 		if (ob instanceof Burnable) {
-			if (ob.isNearby(x, y) && !ob.isColliding(x, y)) {
+			if (ob.isNearby(x, y) || ob.isColliding(x, y)) {
 				boolean alp = false;// if fire is already present
 				for (GameObject obj : objects) {
 					if (obj instanceof Fire && obj.isColliding(ob.getX(), ob.getY())) {
@@ -138,9 +139,9 @@ public class Fire extends GameObject implements Spreadable, TurnBased {
 						break;
 					}
 				}
-
-				if (!alp && !(map.getTile(ob.getX(), ob.getY()) instanceof WaterFloor))
+				if (!alp && !(map.getTile(ob.getX(), ob.getY()) instanceof WaterFloor)) {
 					map.addObject(new Fire(ob.getX(), ob.getY(), turnsLeft - 1));
+				}
 			}
 		}
 
@@ -156,7 +157,7 @@ public class Fire extends GameObject implements Spreadable, TurnBased {
 	 */
 	@Override
 	public boolean canSpread() {
-		return false;
+		return true;
 	}
 
 }

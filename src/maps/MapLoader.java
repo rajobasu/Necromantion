@@ -54,38 +54,30 @@ public class MapLoader {
 	}
 
 	/**
-	 * Loads a map based on the serial number given.It uses a RGB color code
-	 * based approach for generating the Map from the given image file.
+	 * Loads a map based on the serial number given.It uses a RGB color code based
+	 * approach for generating the Map from the given image file.
 	 * 
-	 * @param index
-	 *            -The map serial number
+	 * @param index -The map serial number
 	 * @return The map corrosponding to the given .PNG file.
 	 * @throws MapNotFoundException
 	 */
 	public Map loadMap(int index) throws MapNotFoundException {
-		/*    Item ------------------------ RGB
-		 * 1  wall ------------------------ 127 | 127 | 127
-		 * 2  player ---------------------- 1   | 2   | 3
-		 * 3  floor ----------------------- 255 | 255 | 255
-		 * 4  door ------------------------ 100 | 0/1 | 0
-		 * 5  enemy ----------------------- 255 | 0   | x      {x ~~> enemy Type}
-		 * 6  food ------------------------ 123 | 150 | x      {x ~~> food Type}
-		 * 7  weapon ---------------------- 123 | x   | y      {x ~~> level , y ~~> Type}
-		 * 8  shield ---------------------- 124 | x   | y      {x ~~> level , y ~~> Type}
-		 * 9  trap ------------------------ 124 | 124 | x      {x ~~> Type }
-		 * 10 Grass ----------------------- 255 | 255 | 0
-		 * 11 Stair ----------------------- 198 | 198 | 0/1    { AscendingStair / DescendingStair }
-		 * 12 Potion ---------------------- 89  | 98  | x      {x ~~> PotionType}
-		 * 		x  ~~  Potion
-		 * 	
-		 * 	    1	   Healing
-		 * 		2      Toxic Gas Potion
-		 * 		3
-		 * 		4
-		 * 		5
-		 * 		6
-		 * 		
-		 * 	
+		/*
+		 * Item ------------------------ RGB 1 wall ------------------------ 127 | 127 |
+		 * 127 2 player ---------------------- 1 | 2 | 3 3 floor -----------------------
+		 * 255 | 255 | 255 4 door ------------------------ 100 | 0/1 | 0 5 enemy
+		 * ----------------------- 255 | 0 | x {x ~~> enemy Type} 6 food
+		 * ------------------------ 123 | 150 | x {x ~~> food Type} 7 weapon
+		 * ---------------------- 123 | x | y {x ~~> level , y ~~> Type} 8 shield
+		 * ---------------------- 124 | x | y {x ~~> level , y ~~> Type} 9 trap
+		 * ------------------------ 124 | 124 | x {x ~~> Type } 10 Grass
+		 * ----------------------- 255 | 255 | 0 11 Stair ----------------------- 198 |
+		 * 198 | 0/1 { AscendingStair / DescendingStair } 12 Potion
+		 * ---------------------- 89 | 98 | x {x ~~> PotionType} x ~~ Potion
+		 * 
+		 * 1 Healing 2 Toxic Gas Potion 3 4 5 6
+		 * 
+		 * 
 		 */
 
 		Map map = null;
@@ -191,27 +183,27 @@ public class MapLoader {
 					// Potions
 					if (red == 89 && green == 98) {
 						switch (blue) {
-							case 1: {
-								map.addCollectable(new HealingPotion(x, y));
-								break;
-							}
-							case 2: {
-								map.addCollectable(new FirePotion(x, y));
-								break;
-							}
-							case 3: {
-								map.addCollectable(new StrengthPotion(x, y));
-								break;
-							}
-							case 4: {
-								break;
-							}
-							case 5: {
-								break;
-							}
-							case 6: {
-								break;
-							}
+						case 1: {
+							map.addCollectable(new HealingPotion(x, y));
+							break;
+						}
+						case 2: {
+							map.addCollectable(new FirePotion(x, y));
+							break;
+						}
+						case 3: {
+							map.addCollectable(new StrengthPotion(x, y));
+							break;
+						}
+						case 4: {
+							break;
+						}
+						case 5: {
+							break;
+						}
+						case 6: {
+							break;
+						}
 
 						}
 						map.addTile(new Floor(x, y, 0));
@@ -229,12 +221,10 @@ public class MapLoader {
 	}
 
 	/**
-	 * This creates a new map via procedural generation and random
-	 * generators.The index parameter is used in the random generation of the
-	 * items.
+	 * This creates a new map via procedural generation and random generators.The
+	 * index parameter is used in the random generation of the items.
 	 * 
-	 * @param index
-	 *            - The serial number of the map
+	 * @param index - The serial number of the map
 	 * @return a new Map
 	 */
 	public Map createMap(int index) {
@@ -258,7 +248,8 @@ public class MapLoader {
 
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
-				if ((x == stup.x && y == stup.y) || (x == stdown.x && y == stdown.y)) continue;
+				if ((x == stup.x && y == stup.y) || (x == stdown.x && y == stdown.y))
+					continue;
 
 				// wall
 				if (arr[x][y] == '#') {
@@ -309,27 +300,28 @@ public class MapLoader {
 		// add rendom items to the map;
 
 		XoRoRNG rng = new XoRoRNG();
-		int val=rng.nextInt(3, 5);
+		double mult = ((index * 1.0 / 2) + 1);
+		double val = rng.nextInt(3, 5) * mult;
 		for (int i = 0; i < val; i++) {
 			Coord crd = dg.utility.randomFloor(arr);
 			map.addCollectable(RandomPotionGenerator.getRandomPotion(crd.x, crd.y));
 		}
 
-		for (int j = 0; j < rng.nextInt(2); j++) {
+		for (int j = 0; j < rng.nextInt(2) * mult; j++) {
 			Coord crd = dg.utility.randomFloor(arr);
 			map.addCollectable(RandomWeaponGenerator.getRandomWeapon(crd.x, crd.y));
 		}
 
-		for (int j = 0; j < rng.nextInt(2); j++) {
+		for (int j = 0; j < rng.nextInt(2) * mult; j++) {
 			Coord crd = dg.utility.randomFloor(arr);
 			map.addCollectable(RandomArmourGenerator.getRandomArmour(crd.x, crd.y));
 		}
 
-		for (int j = 0; j < rng.nextInt(1, 4); j++) {
+		for (int j = 0; j < rng.nextInt(1, 4) * mult; j++) {
 			Coord crd = dg.utility.randomFloor(arr);
 			map.addCollectable(RandomHolographGenerator.getRandomHolograph(crd.x, crd.y));
 		}
-		for (int j = 0; j < rng.nextInt(1, 3); j++) {
+		for (int j = 0; j < rng.nextInt(1, 3) * mult; j++) {
 			Coord crd = dg.utility.randomFloor(arr);
 			map.addCollectable(RandomFoodGenerator.getRandomFood(crd.x, crd.y));
 		}

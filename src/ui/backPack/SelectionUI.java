@@ -4,6 +4,8 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import com.sun.swing.internal.plaf.basic.resources.basic_zh_TW;
+
 import buttonMsc.ButtonEvent;
 import buttonMsc.ButtonListener;
 import buttonMsc.ButtonMaker;
@@ -15,10 +17,20 @@ import objects.Collectable;
 import objects.GameObject;
 import objects.entities.Player;
 import objects.misc.BackPack;
+import objects.playerResource.armours.BaseArmour;
 import objects.playerResource.armours.Shield;
 import objects.playerResource.food.Food;
 import objects.playerResource.potions.Potion;
+import objects.playerResource.weapons.BaseWeapon;
 import objects.playerResource.weapons.Weapon;
+
+/**
+ * THIS CLASS IS NOTTTTT USED ANYWHERE.
+ * 
+ * 
+ * @author rajarshibasu
+ *
+ */
 
 public class SelectionUI implements ButtonListener, ButtonMaker {
 
@@ -94,23 +106,25 @@ public class SelectionUI implements ButtonListener, ButtonMaker {
 
 		BackPack bp = BackPack.INSTANCE();
 		GameEngine.INSTANCE.setGameState(GameState.INVENTORY);
-		
+
 		if (e.getActionCommand().equals("c")) {
 
 		} else if (e.getActionCommand().equals("u")) {
-			
+
 			if (object instanceof Weapon) {
-				bp.addItem(bp.getWeapon());
+				if (!(bp.getWeapon() instanceof BaseWeapon))
+					bp.addItem(bp.getWeapon());
 				bp.removeItem(object);
 				bp.setWeapon((Weapon) object);
 			} else if (object instanceof Shield) {
-				bp.addItem(bp.getShield());
+				if (!(bp.getShield() instanceof BaseArmour))
+					bp.addItem(bp.getShield());
 				bp.removeItem(object);
 				bp.setShield((Shield) object);
 			} else if (object instanceof Food) {
 				Player.getINSTANCE().eatFood((Food) object);
 			} else if (object instanceof Potion) {
-				//((Potion) object).drink(map);
+				// ((Potion) object).drink(map);
 				bp.removeItem(object);
 			}
 
@@ -133,7 +147,7 @@ public class SelectionUI implements ButtonListener, ButtonMaker {
 	@Override
 	public void destroyButtons() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

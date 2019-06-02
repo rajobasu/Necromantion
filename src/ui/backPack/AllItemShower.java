@@ -16,6 +16,7 @@ import framework.engines.GameEngine;
 import imageHandlers.ImageLoader;
 import imageHandlers.Images;
 import objects.Collectable;
+import objects.GameObject;
 import objects.misc.BackPack;
 import objects.playerResource.armours.BaseArmour;
 import objects.playerResource.weapons.BaseWeapon;
@@ -34,7 +35,15 @@ public class AllItemShower implements ButtonListener, ButtonMaker, BlockableUI {
 		bp = BackPack.INSTANCE();
 		buttons = new LinkedList<>();
 		this.c = c;
-		initializeButtons();
+		try {
+			initializeButtons();
+		} catch (NullPointerException e) {
+			for (Collectable cc : bp.getItems()) {
+				GameObject ob = (GameObject) cc;
+				System.out.println(ob.getName());
+			}
+			throw e;
+		}
 
 	}
 
@@ -108,7 +117,6 @@ public class AllItemShower implements ButtonListener, ButtonMaker, BlockableUI {
 
 	@Override
 	public void buttonClicked(ButtonEvent e) {
-
 
 		if (e.getActionCommand().equalsIgnoreCase("EQUIPPED")) {
 			disableButtons();

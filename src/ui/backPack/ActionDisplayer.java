@@ -16,11 +16,13 @@ import objects.GameObject;
 import objects.ResourceUpdator;
 import objects.entities.Player;
 import objects.misc.BackPack;
+import objects.playerResource.armours.BaseArmour;
 import objects.playerResource.armours.Shield;
 import objects.playerResource.food.Food;
 import objects.playerResource.holographs.Holograph;
 import objects.playerResource.potions.Potion;
 import objects.playerResource.selectionCriterias.Identifyable;
+import objects.playerResource.weapons.BaseWeapon;
 import objects.playerResource.weapons.Weapon;
 import ui.BlockableUI;
 
@@ -53,16 +55,19 @@ public class ActionDisplayer implements ButtonListener, ButtonMaker, BlockableUI
 
 	@Override
 	public void initializeButtons() {
-		if (!isEquippedItem) btn_drop = new CustomButton(startingX, startingY, 100, 30, canvasObject);
+		if (!isEquippedItem)
+			btn_drop = new CustomButton(startingX, startingY, 100, 30, canvasObject);
 		btn_cancel = new CustomButton(startingX, startingY + 40, 100, 30, canvasObject);
 		btn_use = new CustomButton(startingX, startingY + 80, 100, 30, canvasObject);
 
 		btn_cancel.addButtonListener(this);
-		if (!isEquippedItem) btn_drop.addButtonListener(this);
+		if (!isEquippedItem)
+			btn_drop.addButtonListener(this);
 		btn_use.addButtonListener(this);
 
 		btn_cancel.setText("Cancel");
-		if (!isEquippedItem) btn_drop.setText("Drop");
+		if (!isEquippedItem)
+			btn_drop.setText("Drop");
 
 		if (object instanceof Weapon || object instanceof Shield) {
 			// MessageEngine.writeToScreen(" "+isEquippedItem);
@@ -80,29 +85,34 @@ public class ActionDisplayer implements ButtonListener, ButtonMaker, BlockableUI
 		}
 
 		btn_cancel.setDefaultColor(Color.RED);
-		if (!isEquippedItem) btn_drop.setDefaultColor(Color.YELLOW);
+		if (!isEquippedItem)
+			btn_drop.setDefaultColor(Color.YELLOW);
 		btn_use.setDefaultColor(Color.GREEN);
 
 		btn_cancel.setPressColor(Color.RED);
-		if (!isEquippedItem) btn_drop.setPressColor(Color.yellow);
+		if (!isEquippedItem)
+			btn_drop.setPressColor(Color.yellow);
 		btn_use.setPressColor(Color.green);
 
 		btn_cancel.setActionCommand("c");
-		if (!isEquippedItem) btn_drop.setActionCommand("d");
+		if (!isEquippedItem)
+			btn_drop.setActionCommand("d");
 		btn_use.setActionCommand("u");
 	}
 
 	@Override
 	public void renderButtons(Graphics g) {
 		btn_cancel.render(g);
-		if (!isEquippedItem) btn_drop.render(g);
+		if (!isEquippedItem)
+			btn_drop.render(g);
 		btn_use.render(g);
 	}
 
 	@Override
 	public void tickButtons() {
 		btn_cancel.tick();
-		if (!isEquippedItem) btn_drop.tick();
+		if (!isEquippedItem)
+			btn_drop.tick();
 		btn_use.tick();
 	}
 
@@ -133,22 +143,28 @@ public class ActionDisplayer implements ButtonListener, ButtonMaker, BlockableUI
 			if (!(object instanceof ResourceUpdator)) {
 
 				if (object instanceof Shield) {
-
-					bp.addItem(bp.getShield());
-					if (isEquippedItem) bp.setShield(null);
-					if (!isEquippedItem) bp.setShield((Shield) object);
+					if (!(bp.getShield() instanceof BaseArmour))
+						bp.addItem(bp.getShield());
+					if (isEquippedItem)
+						bp.setShield(null);
+					if (!isEquippedItem)
+						bp.setShield((Shield) object);
 				} else if (object instanceof Weapon) {
-					bp.addItem(bp.getWeapon());
-					if (isEquippedItem) bp.setWeapon(null);
+					if (!(bp.getWeapon() instanceof BaseWeapon))
+						bp.addItem(bp.getWeapon());
+					if (isEquippedItem)
+						bp.setWeapon(null);
 
-					if (!isEquippedItem) bp.setWeapon((Weapon) object);
+					if (!isEquippedItem)
+						bp.setWeapon((Weapon) object);
 				} else {
 
 					object.use(MapManager.getCurrentMap());
 
 				}
 
-				if (!isEquippedItem) bp.removeItem(object);
+				if (!isEquippedItem)
+					bp.removeItem(object);
 				GameEngine.INSTANCE.setGameState(GameState.LEVELMAP);
 
 			} else {
@@ -163,21 +179,24 @@ public class ActionDisplayer implements ButtonListener, ButtonMaker, BlockableUI
 	@Override
 	public void destroyButtons() {
 		btn_cancel.destroy();
-		if (!isEquippedItem) btn_drop.destroy();
+		if (!isEquippedItem)
+			btn_drop.destroy();
 		btn_use.destroy();
 	}
 
 	@Override
 	public void block() {
 		btn_cancel.disable();
-		if (!isEquippedItem) btn_drop.disable();
+		if (!isEquippedItem)
+			btn_drop.disable();
 		btn_use.disable();
 	}
 
 	@Override
 	public void unBlock() {
 		btn_cancel.enable();
-		if (!isEquippedItem) btn_drop.enable();
+		if (!isEquippedItem)
+			btn_drop.enable();
 		btn_use.enable();
 
 	}

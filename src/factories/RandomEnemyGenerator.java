@@ -9,7 +9,7 @@ public class RandomEnemyGenerator {
 
 	private static XoRoRNG rng=new XoRoRNG();
 	
-	public static Enemy getRandomEnemy(int x,int y){
+	public static Enemy getRandomEnemy(int x,int y,int level){
 		final int TOTAL_ENEMY_COUNT=2;
 		
 		switch(rng.nextInt(TOTAL_ENEMY_COUNT)){

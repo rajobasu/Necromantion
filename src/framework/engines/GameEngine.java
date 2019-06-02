@@ -52,7 +52,7 @@ public class GameEngine extends Engine {
 
 	// TODO :[PARTIALLY DONE] make the random generators
 
-	// TODO :[PARTIALLY DONE]give the stats to the various items.
+	// TODO :[PARTIALLY DONE] give the stats to the various items.
 
 	// TODO [DONE]: change the MRat sprites to 32 32 due to Spritesheet
 	// hardcodings
@@ -130,6 +130,7 @@ public class GameEngine extends Engine {
 
 		BackPack.INSTANCE();
 		mapLoader = new MapLoader(this);
+		
 		pendingExclusiveAnimation = new LinkedList<>();
 		gameState = GameState.LEVELMAP;
 
@@ -187,20 +188,23 @@ public class GameEngine extends Engine {
 			// Render the Map
 			bpui = null;
 
-			g.translate(offsetX, offsetY);// this refers to thw gameplay
-											// display area
+			// This translates to the gameplay area. 
+			g.translate(offsetX, offsetY);
 
-			g.translate(-Camera.getOffsetX(), -Camera.getOffsetY());// this
-																	// refers
-																	// to
-																	// the
-																	// camera
+			// This translates the view according to the camera ON TOP OF the gameplay area. 
+			// the result is basically a composition of the two shifts, once we change to the gameplay
+			// area and then again to the camera location
+			g.translate(-Camera.getOffsetX(), -Camera.getOffsetY());
 
 			// chack if there is a pending cutscene: if so , set the XOOM to
 			// default;
 			if (!cutsceneManager.hasPendingCutscene())
 				g.scale(Constants.ZOOM, Constants.ZOOM);
 
+			
+			/*
+			 * This is the main place where all the objects are rendered. 
+			 */
 			MapManager.getCurrentMap().render(g);
 
 			// revert to the original default ZOOM.
@@ -210,12 +214,10 @@ public class GameEngine extends Engine {
 			// drawn.Gives greater control to what all the cutscene can
 			// control.
 
-			g.translate(Camera.getOffsetX(), Camera.getOffsetY());// this
-																	// refers
-																	// to
-																	// the
-																	// camera
-
+			
+			// We now revert the changes to made by translation of the camera.
+			g.translate(Camera.getOffsetX(), Camera.getOffsetY());
+			
 			if (cutsceneManager.hasPendingCutscene())
 				cutsceneManager.renderCutscene(g);
 
@@ -236,9 +238,7 @@ public class GameEngine extends Engine {
 		default:
 			throw new IllegalStateException();
 		}
-
-		// Render The Backpack
-
+		
 		///////////////////////////////
 		/////////////////////////////////////////
 
@@ -295,8 +295,7 @@ public class GameEngine extends Engine {
 		if (latestLocation == null)
 			return;
 
-		System.out.println("chfhf");
-
+		
 		LinkedList<Enemy> enemies = MapManager.getCurrentMap().getEnemies();
 		for (Enemy enemy : enemies) {
 			if (enemy.getLocation().equals(latestLocation)) {
