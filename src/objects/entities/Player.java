@@ -412,5 +412,15 @@ public class Player extends Entity {
 	public String getInfo() {
 		return "This is the Player";
 	}
+	
+	@Override
+	public int getAttackStrength() {
+		return weapon.getAverageDamage();
+	}
+	
+	@Override
+	public int getDefenseStrength() {
+		return shield.getAbsorbDamage();
+	}
 
 }

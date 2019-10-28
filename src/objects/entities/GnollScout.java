@@ -11,7 +11,7 @@ import maps.Map;
 public class GnollScout extends Enemy {
 
 	public GnollScout(int x, int y, int imageCode) {
-		super(x, y, imageCode, 15, 8, 12);
+		super(x, y, imageCode, 15, 8, 6);
 		image = Images.GNOLL_SCOUT;
 	}
 

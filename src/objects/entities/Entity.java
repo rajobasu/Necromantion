@@ -42,14 +42,17 @@ public abstract class Entity extends GameObject implements Burnable {
 	protected int prevX;
 	protected int prevY;
 
+	protected int defenseStrength;
+	protected int attackStrength;
+
 	/**
-	 * This stores a finer value so that the movement animation of the Entity is
-	 * not abrupt.It stores the x value.
+	 * This stores a finer value so that the movement animation of the Entity is not
+	 * abrupt.It stores the x value.
 	 */
 	protected double deltaX;
 	/**
-	 * This stores a finer value so that the movement animation of the Entity is
-	 * not abrupt.It stores the y value.
+	 * This stores a finer value so that the movement animation of the Entity is not
+	 * abrupt.It stores the y value.
 	 */
 	protected double deltaY;
 
@@ -59,9 +62,9 @@ public abstract class Entity extends GameObject implements Burnable {
 	protected Animation currentAnimation;
 	protected boolean skipTurn;
 	/**
-	 * This stores any animation that needs to be played. Ideally, it should
-	 * replace the {@code currentAnimation} after it completes or replaces it
-	 * immediately if the {@code currentAnimation} is infinite.
+	 * This stores any animation that needs to be played. Ideally, it should replace
+	 * the {@code currentAnimation} after it completes or replaces it immediately if
+	 * the {@code currentAnimation} is infinite.
 	 */
 	protected Animation pendingAnimation;
 
@@ -132,8 +135,8 @@ public abstract class Entity extends GameObject implements Burnable {
 
 	/**
 	 * 
-	 * @return The actual xco-ordinate of the object. There is no need to
-	 *         multiply it with {@code Constants.UNIT_DISTANCE}
+	 * @return The actual xco-ordinate of the object. There is no need to multiply
+	 *         it with {@code Constants.UNIT_DISTANCE}
 	 */
 	public int getActualX() {
 		int u = Constants.UNIT_DISTANCE;
@@ -143,8 +146,8 @@ public abstract class Entity extends GameObject implements Burnable {
 
 	/**
 	 * 
-	 * @return The actual xco-ordinate of the object. There is no need to
-	 *         multiply it with {@code Constants.UNIT_DISTANCE}
+	 * @return The actual xco-ordinate of the object. There is no need to multiply
+	 *         it with {@code Constants.UNIT_DISTANCE}
 	 */
 	public int getActualY() {
 		int u = Constants.UNIT_DISTANCE;
@@ -154,24 +157,18 @@ public abstract class Entity extends GameObject implements Burnable {
 	}
 
 	/**
-	 * This method draws the Entity according to the direction it is facing. It
-	 * does not use it's own x and y value as the object calling it may want to
-	 * be rendered at some inbetween value which is not supported by
+	 * This method draws the Entity according to the direction it is facing. It does
+	 * not use it's own x and y value as the object calling it may want to be
+	 * rendered at some inbetween value which is not supported by
 	 * {@code x*Constants.UNIT_DISTANCE}.
 	 * 
 	 * 
-	 * @param g
-	 *            - The graphics context.
-	 * @param img
-	 *            - The image to be drawn.
-	 * @param x
-	 *            - The starting x co-ordinate.
-	 * @param y
-	 *            - The starting y co-ordinate.
-	 * @param width
-	 *            - The width of the image.
-	 * @param height
-	 *            - The height of the image.
+	 * @param g      - The graphics context.
+	 * @param img    - The image to be drawn.
+	 * @param x      - The starting x co-ordinate.
+	 * @param y      - The starting y co-ordinate.
+	 * @param width  - The width of the image.
+	 * @param height - The height of the image.
 	 */
 	protected void drawImage(Graphics2D g, BufferedImage img, int x, int y, int width, int height) {
 		if (facingLeft) {
@@ -185,8 +182,8 @@ public abstract class Entity extends GameObject implements Burnable {
 	}
 
 	/**
-	 * reduces the number of turns of all oongoing effects and removes those
-	 * which have been completed.
+	 * reduces the number of turns of all oongoing effects and removes those which
+	 * have been completed.
 	 */
 	public void tick(Map map) {
 		for (Effect effect : Effect.values()) {
@@ -209,8 +206,7 @@ public abstract class Entity extends GameObject implements Burnable {
 	/**
 	 * Checks if this entity is under the action of a particular {@code Effect}
 	 * 
-	 * @param effect
-	 *            - The effect to be searched
+	 * @param effect - The effect to be searched
 	 * @return Whether the entity has that effect
 	 */
 	public boolean hasOngoingEffect(Effect effect) {
@@ -219,13 +215,11 @@ public abstract class Entity extends GameObject implements Burnable {
 
 	/**
 	 * Adds a new {@code Effect} with a specified number of turns. If that
-	 * {@code Effect} is already present, the number of turns gets increased by
-	 * that mentioned by the parameter.
+	 * {@code Effect} is already present, the number of turns gets increased by that
+	 * mentioned by the parameter.
 	 * 
-	 * @param effect
-	 *            - The {@code Effect} to be added
-	 * @param turns
-	 *            - The number of turns the {@code Effect} will last
+	 * @param effect - The {@code Effect} to be added
+	 * @param turns  - The number of turns the {@code Effect} will last
 	 */
 	public void addEffect(Effect effect, int turns) {
 		if (ongoingEffects.containsKey(effect)) {
@@ -235,4 +229,13 @@ public abstract class Entity extends GameObject implements Burnable {
 
 		ongoingEffects.put(effect, turns);
 	}
+
+	public int getDefenseStrength() {
+		return defenseStrength;
+	}
+
+	public int getAttackStrength() {
+		return attackStrength;
+	}
+
 }

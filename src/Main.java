@@ -1,4 +1,3 @@
- 
 import framework.GameLoop;
 import framework.Screen;
 import ui.GameWindow;

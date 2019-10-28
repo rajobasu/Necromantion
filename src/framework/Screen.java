@@ -98,7 +98,7 @@ public class Screen extends Canvas {
 		GameEngine.INSTANCE.setLength(Constants.LENGTH);
 
 		hud = new HUDEngine();
-
+		
 		hud.setOffsetX((Constants.BREADTH - 8) * Constants.UNIT_DISTANCE);
 		hud.setOffsetY(0);
 

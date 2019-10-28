@@ -26,30 +26,30 @@ public class MRat extends Enemy {
 	public void tick(Map map) {
 		super.tick(map);
 
-		if (life <= 0) return;
+		if (life <= 0)
+			return;
 
-		if (p == null) p = Player.getINSTANCE();
+		if (p == null)
+			p = Player.getINSTANCE();
 		/*
 		 * if(location.distanceTo(p.getLocation())<20){
 		 * 
 		 * }
 		 **/
 		if (p.isNearby(x, y)) {
-			int damage=attackEnemy(p);
-					
-			
-			String s="";
-			if(damage==Constants.DODGED){
-				s+="You dodged "+getName()+"'s attack";
-			}else{
-				s="Rat attacked you for ";
-				s+=damage;
-				s+=" damage !.";
-				
+			int damage = attackEnemy(p);
+
+			String s = "";
+			if (damage == Constants.DODGED) {
+				s += "You dodged " + getName() + "'s attack";
+			} else {
+				s = "Rat attacked you for ";
+				s += damage;
+				s += " damage !.";
+
 			}
-			
-			
-			MessageEngine.writeToScreen(s,damage==Constants.DODGED?Color.GREEN:Color.RED);
+
+			MessageEngine.writeToScreen(s, damage == Constants.DODGED ? Color.GREEN : Color.RED);
 
 			GameEngine.addExclsiveAnimation(this);
 			pendingAnimation = new MRatAttackAnimation();
@@ -66,8 +66,10 @@ public class MRat extends Enemy {
 	@Override
 	public void render(Graphics2D g) {
 
-		if (currentAnimation instanceof IdleMRatAnimation) image = Images.MRAT_IDLE;
-		if (currentAnimation instanceof MRatAttackAnimation) image = Images.MRAT_HIT;
+		if (currentAnimation instanceof IdleMRatAnimation)
+			image = Images.MRAT_IDLE;
+		if (currentAnimation instanceof MRatAttackAnimation)
+			image = Images.MRAT_HIT;
 
 		BufferedImage img = imgLdr.getImage(image, currentAnimation.getSceneIndex());
 
@@ -80,13 +82,14 @@ public class MRat extends Enemy {
 	@Override
 	public void updateGraphics() {
 		if (pendingAnimation != null && pendingAnimation instanceof ExclusiveAnimation && GameEngine.canLock(this)) {
-			
+
 			currentAnimation = pendingAnimation;
 			pendingAnimation = null;
 		}
 
 		if (currentAnimation.hasEnded()) {
-			if (currentAnimation instanceof ExclusiveAnimation) GameEngine.removeAnmation(this);
+			if (currentAnimation instanceof ExclusiveAnimation)
+				GameEngine.removeAnmation(this);
 
 			currentAnimation = new IdleMRatAnimation();
 		} else {
@@ -94,12 +97,11 @@ public class MRat extends Enemy {
 		}
 
 	}
-	
+
 	@Override
 	public String getName() {
 
 		return "Rat";
 	}
-
 
 }

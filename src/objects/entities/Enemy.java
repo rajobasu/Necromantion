@@ -14,9 +14,6 @@ import objects.roomItems.Wall;
 
 public abstract class Enemy extends Entity {
 
-	private int defenseStrength;
-	private int attackStrength;
-
 	public Enemy(int x, int y, int imageCode, int maxLife, int defenseStrength, int attackStrength) {
 		super(x, y, imageCode, maxLife);
 		this.defenseStrength = defenseStrength;
@@ -68,8 +65,11 @@ public abstract class Enemy extends Entity {
 		}
 
 	}
+
 	/**
-	 * Checks if the object on which the method is invoked is colliding with any of the objects in the List passed as a parameter
+	 * Checks if the object on which the method is invoked is colliding with any of
+	 * the objects in the List passed as a parameter
+	 * 
 	 * @param objects - List of the GameObjects
 	 * @return - true is there is a collision, false otherwise
 	 */
@@ -79,11 +79,15 @@ public abstract class Enemy extends Entity {
 		for (GameObject ob : objects) {
 			if (ob.isColliding(x, y)) {
 
-				if (ob instanceof Wall || ob instanceof Entity) { return true; }
+				if (ob instanceof Wall || ob instanceof Entity) {
+					return true;
+				}
 				if (ob instanceof Door) {
 
 					Door d = (Door) ob;
-					if (d.isLocked()) { return true; }
+					if (d.isLocked()) {
+						return true;
+					}
 				}
 
 				break;
@@ -92,16 +96,19 @@ public abstract class Enemy extends Entity {
 
 		return false;
 	}
-	
-	
+
 	/**
-	 * Checks if the object on which the method is invoked is colliding with any of the Entities in the List passed as a parameter
+	 * Checks if the object on which the method is invoked is colliding with any of
+	 * the Entities in the List passed as a parameter
+	 * 
 	 * @param objects - List of the Entities
 	 * @return - true is there is a collision, false otherwise
 	 */
 	public boolean checkEntityCollision(LinkedList<Enemy> enemyList) {
 		for (Enemy e : enemyList) {
-			if (e.isColliding(x, y) && e != this) { return true; }
+			if (e.isColliding(x, y) && e != this) {
+				return true;
+			}
 		}
 
 		return false;
@@ -109,22 +116,15 @@ public abstract class Enemy extends Entity {
 
 	public void tick(Map map) {
 		super.tick(map);
-		if (life > 0) return;
+		if (life > 0)
+			return;
 
 		Player.getINSTANCE().updateSkillLevel(SkillLevelImprovement.ENEMY_KILLED);
 		map.removeEnemy(this);
 	}
 
-	public int getDefenseStrength() {
-		return defenseStrength;
-	}
-
-	public int getAttackStrength() {
-		return attackStrength;
-	}
-
-	protected int attackEnemy(Player p) {
-		int x = Utilities.getDamage(attackStrength, p.getShield().getAbsorbDamage(), 0);
+	protected int attackEnemy(Entity p) {
+		int x = Utilities.getDamage(attackStrength, p.getDefenseStrength(), 0);
 		p.decreaseLife(Math.max(x, 0));
 
 		return x;
